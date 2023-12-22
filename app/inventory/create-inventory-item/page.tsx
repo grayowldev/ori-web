@@ -12,7 +12,7 @@ import {
     Table,
     TableBody,
 //     TableCaption,
-//     TableCell,
+    TableCell,
     TableHead,
     TableHeader,
     TableRow,
@@ -88,86 +88,86 @@ export default function CreateInventoryItem() {
 
 
     // Update Fields in rowData
-    // let updateName = (id: number, event:any) => {
-    //     console.log(id)
-    //     let data = tableRows
-    //     console.log(data)
-    //     console.log(event)
-    //     const updatedRows =  tableRows.map(obj => {
-    //          if (obj.id === id && event.target) {
-    //             console.log('found')
-    //
-    //             return {...obj, name: event.target.value}
-    //         }
-    //         return obj;
-    //     })
-    //     setTableRows(updatedRows)
-    //     console.log(data,tableRows)
-    // }
+    let updateName = (id: number, event:any) => {
+        console.log(id)
+        let data = tableRows
+        console.log(data)
+        console.log(event)
+        const updatedRows =  tableRows.map(obj => {
+             if (obj.id === id && event.target) {
+                console.log('found')
 
-    // let updateWeight = (id: number, event:any) => {
-    //     let data = tableRows
-    //     const updatedRows =  tableRows.map(obj => {
-    //         if (obj.id === id && event.target) {
-    //             console.log('found')
-    //             return {...obj, goldGrossWeight: Number(event.target.value)}
-    //         }
-    //         return obj;
-    //     })
-    //     console.log(getCurrSum)
-    //     setWeightSum(getCurrSum)
-    //     console.log('@@@',weightSum)
-    //     setTableRows(updatedRows)
-    //     console.log(tableRows)
-    //     console.log('@@@1',weightSum)
-    // }
+                return {...obj, name: event.target.value}
+            }
+            return obj;
+        })
+        setTableRows(updatedRows)
+        console.log(data,tableRows)
+    }
 
-    // let updateCategory = (id: number, event:any) => {
-    //     let data = tableRows
-    //     const updatedRows =  tableRows.map(obj => {
-    //         if (obj.id === id && event.target) {
-    //             console.log('found')
-    //             return {...obj, category: event.target.value}
-    //         }
-    //         return obj;
-    //     })
-    //     setTableRows(updatedRows)
-    //     console.log(tableRows)
-    // }
+    let updateWeight = (id: number, event:any) => {
+        let data = tableRows
+        const updatedRows =  tableRows.map(obj => {
+            if (obj.id === id && event.target) {
+                console.log('found')
+                return {...obj, goldGrossWeight: Number(event.target.value)}
+            }
+            return obj;
+        })
+        console.log(getCurrSum)
+        setWeightSum(getCurrSum)
+        console.log('@@@',weightSum)
+        setTableRows(updatedRows)
+        console.log(tableRows)
+        console.log('@@@1',weightSum)
+    }
 
-    // let updateStyle = (id: number, event:any) => {
-    //     let data = tableRows
-    //     const updatedRows =  tableRows.map(obj => {
-    //         if (obj.id === id && event.target) {
-    //             console.log('found')
-    //             return {...obj, subCategory: event.target.value}
-    //         }
-    //         return obj;
-    //     })
-    //     setTableRows(updatedRows)
-    //     console.log(tableRows)
-    // }
+    let updateCategory = (id: number, event:any) => {
+        let data = tableRows
+        const updatedRows =  tableRows.map(obj => {
+            if (obj.id === id && event.target) {
+                console.log('found')
+                return {...obj, category: event.target.value}
+            }
+            return obj;
+        })
+        setTableRows(updatedRows)
+        console.log(tableRows)
+    }
 
-    // let updateMetalPurity = (id: number, event:any) => {
-    //     let data = tableRows
-    //     const updatedRows =  tableRows.map(obj => {
-    //         if (obj.id === id && event.target) {
-    //             console.log('found')
-    //             return {...obj, karat: event.target.value}
-    //         }
-    //         return obj;
-    //     })
-    //     setTableRows(updatedRows)
-    //     console.log(tableRows)
-    // }
+    let updateStyle = (id: number, event:any) => {
+        let data = tableRows
+        const updatedRows =  tableRows.map(obj => {
+            if (obj.id === id && event.target) {
+                console.log('found')
+                return {...obj, subCategory: event.target.value}
+            }
+            return obj;
+        })
+        setTableRows(updatedRows)
+        console.log(tableRows)
+    }
 
-    // const getCurrSum = tableRows.reduce((accumulator, currObj) => {
-    //     console.log("acc", accumulator)
-    //     console.log(currObj.goldGrossWeight)
-    //     console.log(accumulator + currObj.goldGrossWeight)
-    //     // setWeightSum(accumulator + currObj.goldGrossWeight)
-    //     return accumulator + currObj.goldGrossWeight
-    // }, 0)
+    let updateMetalPurity = (id: number, event:any) => {
+        let data = tableRows
+        const updatedRows =  tableRows.map(obj => {
+            if (obj.id === id && event.target) {
+                console.log('found')
+                return {...obj, karat: event.target.value}
+            }
+            return obj;
+        })
+        setTableRows(updatedRows)
+        console.log(tableRows)
+    }
+
+    const getCurrSum = tableRows.reduce((accumulator, currObj) => {
+        console.log("acc", accumulator)
+        console.log(currObj.goldGrossWeight)
+        console.log(accumulator + currObj.goldGrossWeight)
+        // setWeightSum(accumulator + currObj.goldGrossWeight)
+        return accumulator + currObj.goldGrossWeight
+    }, 0)
 
     let handleSubmit = async (event: any) => {
         event.preventDefault();
@@ -228,30 +228,30 @@ export default function CreateInventoryItem() {
                     </TableRow>
                     </TableHeader>
                     <TableBody>
-                {/*        /!*{(*!/*/}
-                {/*        /!*    tableRows.map((item:any, index:number) => {*!/*/}
+                        {(
+                            tableRows.map((item:any, index:number) => {
                 {/*        /!*        console.log(tableRows)*!/*/}
-                {/*        /!*        return (*!/*/}
-                {/*        /!*            <TableRow key={item.id}>*!/*/}
-                {/*        /!*                <TableCell>*!/*/}
-                {/*        /!*                    <input placeholder={'Enter description'} onChange={(e) => updateName(item.id, e)}/>*!/*/}
-                {/*        /!*                </TableCell>*!/*/}
-                {/*        /!*                /!*<TableCell>*!/*!/*/}
-                {/*        /!*                /!*    <input type={"number"} placeholder={'0.0'} onChange={(e) => updateWeight(item.id, e)}/>*!/*!/*/}
-                {/*        /!*                /!*</TableCell>*!/*!/*/}
-                {/*        /!*                <TableCell>*!/*/}
-                {/*        /!*                    <input type={"text"} placeholder={'Enter Category'} onChange={(e) => updateCategory(item.id, e)}/>*!/*/}
-                {/*        /!*                </TableCell>*!/*/}
-                {/*        /!*                <TableCell>*!/*/}
-                {/*        /!*                    <input type={"text"} placeholder={'Enter Style'} onChange={(e) => updateStyle(item.id, e)}/>*!/*/}
-                {/*        /!*                </TableCell>*!/*/}
-                {/*        /!*                <TableCell>*!/*/}
-                {/*        /!*                    <input type={"number"} placeholder={'0.0'} onChange={(e) => updateMetalPurity(item.id, e)}/>*!/*/}
-                {/*        /!*                </TableCell>*!/*/}
-                {/*        /!*            </TableRow>*!/*/}
-                {/*        /!*        )*!/*/}
-                {/*        /!*    })*!/*/}
-                {/*        /!*)}*!/*/}
+                                return (
+                                    <TableRow key={item.id}>
+                                        <TableCell>
+                                            <input placeholder={'Enter description'} onChange={(e) => updateName(item.id, e)}/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <input type={"number"} placeholder={'0.0'} onChange={(e) => updateWeight(item.id, e)}/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <input type={"text"} placeholder={'Enter Category'} onChange={(e) => updateCategory(item.id, e)}/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <input type={"text"} placeholder={'Enter Style'} onChange={(e) => updateStyle(item.id, e)}/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <input type={"number"} placeholder={'0.0'} onChange={(e) => updateMetalPurity(item.id, e)}/>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
+                        )}
                     </TableBody>
                 </Table>
 
