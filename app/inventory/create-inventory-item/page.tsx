@@ -1,17 +1,13 @@
 'use client'
 import {useState} from "react";
 import Slider from "@/components/Sliders/slider";
-// import {getAllOrders} from "@/services/ori/oriOrdering";
-// import {Simulate} from "react-dom/test-utils";
-// import input = Simulate.input;
-// import {arrayOf} from "prop-types";
 import {createInventoryItems} from "@/services/inventory";
-// import {Input} from "@/components/ui/input";
+import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {
     Table,
     TableBody,
-//     TableCaption,
+    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -45,23 +41,15 @@ export default function CreateInventoryItem() {
         }
     ])
     const [weightSum, setWeightSum] = useState(1)
-    // const triggerRightSlider = () => {
-    //     setShowRightSlider(!showRightSlider)
-    //     console.log(showRightSlider)
-    // }
+    const triggerRightSlider = () => {
+        setShowRightSlider(!showRightSlider)
+        console.log(showRightSlider)
+    }
 
     let handleOrderSelection = (data: any) => {
         setPurchaseOrder(data)
         console.log('order: ',purchaseOrder)
     }
-
-    // let updateItemQty = (event: any) => {
-    //     console.log('update vals')
-    //     if (event.target != null) {
-    //         console.log('event', event.target)
-    //         setItemQty(event.target.value)
-    //     }
-    // }
 
 
     let generateTableRows = () => {
@@ -192,27 +180,12 @@ export default function CreateInventoryItem() {
 
             {showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}
             <div className={"item-container order-fetch-container"}>
-                {/*<Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>*/}
-                {/*<Button className={"ml-2"} variant={"outline"}  onClick={triggerRightSlider}>*/}
-                {/*    Fetch Orders*/}
-                {/*</Button>*/}
+                <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
+                <Button className={"ml-2"} variant={"outline"}  onClick={triggerRightSlider}>
+                    Fetch Orders
+                </Button>
 
             </div>
-
-            {/*<div className={"order-fetch-container"}>*/}
-            {/*    <div>*/}
-            {/*        Number of items to create:*/}
-            {/*    </div>*/}
-
-            {/*    <Input*/}
-            {/*        className={"w-20 inline"}*/}
-            {/*        type={"number"}*/}
-            {/*        placeholder="0"*/}
-            {/*        onChange={updateItemQty}*/}
-            {/*    />*/}
-            {/*    <Button className={"w-32 ml-4"} onClick={generateTableRows}>*/}
-            {/*        Set</Button>*/}
-            {/*</div>*/}
 
             {/*todo: Create table rows depending on number of items being created*/}
 
@@ -230,7 +203,7 @@ export default function CreateInventoryItem() {
                     <TableBody>
                         {(
                             tableRows.map((item:any, index:number) => {
-                {/*        /!*        console.log(tableRows)*!/*/}
+                                console.log(tableRows)
                                 return (
                                     <TableRow key={item.id}>
                                         <TableCell>
