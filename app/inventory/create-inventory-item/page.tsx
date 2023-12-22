@@ -8,15 +8,15 @@ import Slider from "@/components/Sliders/slider";
 import {createInventoryItems} from "@/services/inventory";
 // import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-// import {
-//     Table,
-//     TableBody,
+import {
+    Table,
+    TableBody,
 //     TableCaption,
 //     TableCell,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from "@/components/ui/table"
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 import {Progress} from "@/components/ui/progress";
 
 export default function CreateInventoryItem() {
@@ -33,7 +33,7 @@ export default function CreateInventoryItem() {
 
     const [showRightSlider, setShowRightSlider] = useState(false);
     const [purchaseOrder, setPurchaseOrder] = useState(null);
-    // const [itemQty, setItemQty] = useState(2)
+    const [itemQty, setItemQty] = useState(2)
     const [tableRows, setTableRows] = useState<Row[]>([
         {
             id: 0,
@@ -64,30 +64,27 @@ export default function CreateInventoryItem() {
     // }
 
 
-    // let generateTableRows = () => {
-    //
-    //     console.log('generating...')
-    //     setItemQty(itemQty + 1)
-    //     console.log(typeof itemQty, itemQty)
-    //     setTableRows([])
-    //     let rows = []
-    //     for (let i = 0; i < itemQty; i++ ) {
-    //         const newItem = {
-    //             id: i,
-    //             name: '',
-    //             goldGrossWeight: 0.0,
-    //             category: '',
-    //             subCategory: '',
-    //             karat: 0.0
-    //         }
-    //         rows.push(newItem)
-    //     }
-    //     setTableRows(rows)
-    //     console.log(tableRows)
-    //     // setShowTableRows(false)
-    //     // setShowTableRows(true)
-    //     // console.log(showTableRows)
-    // }
+    let generateTableRows = () => {
+
+        console.log('generating...')
+        setItemQty(itemQty + 1)
+        console.log(typeof itemQty, itemQty)
+        setTableRows([])
+        let rows = []
+        for (let i = 0; i < itemQty; i++ ) {
+            const newItem = {
+                id: i,
+                name: '',
+                goldGrossWeight: 0.0,
+                category: '',
+                subCategory: '',
+                karat: 0.0
+            }
+            rows.push(newItem)
+        }
+        setTableRows(rows)
+        console.log(tableRows)
+    }
 
 
     // Update Fields in rowData
@@ -220,17 +217,17 @@ export default function CreateInventoryItem() {
             {/*todo: Create table rows depending on number of items being created*/}
 
             <div className={"w-max border-solid border-2 rounded-lg p-8"}>
-                {/*<Table>*/}
-                {/*    <TableHeader>*/}
-                {/*    <TableRow>*/}
-                {/*        <TableHead>Name</TableHead>*/}
-                {/*        <TableHead>Weight</TableHead>*/}
-                {/*        <TableHead>Category</TableHead>*/}
-                {/*        <TableHead>Style</TableHead>*/}
-                {/*        <TableHead>Metal Purity</TableHead>*/}
-                {/*    </TableRow>*/}
-                {/*    </TableHeader>*/}
-                {/*    <TableBody>*/}
+                <Table>
+                    <TableHeader>
+                    <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Weight</TableHead>
+                        <TableHead>Category</TableHead>
+                        <TableHead>Style</TableHead>
+                        <TableHead>Metal Purity</TableHead>
+                    </TableRow>
+                    </TableHeader>
+                    <TableBody>
                 {/*        /!*{(*!/*/}
                 {/*        /!*    tableRows.map((item:any, index:number) => {*!/*/}
                 {/*        /!*        console.log(tableRows)*!/*/}
@@ -255,11 +252,11 @@ export default function CreateInventoryItem() {
                 {/*        /!*        )*!/*/}
                 {/*        /!*    })*!/*/}
                 {/*        /!*)}*!/*/}
-                {/*    </TableBody>*/}
-                {/*</Table>*/}
+                    </TableBody>
+                </Table>
 
                 <div className={"w-full inline flex place-content-center w-100%"}>
-                    {/*<Button variant={"outline"} className={"center"} onClick={generateTableRows}>+ Add item</Button>*/}
+                    <Button variant={"outline"} className={"center"} onClick={generateTableRows}>+ Add item</Button>
                 </div>
                 <Button onClick={handleSubmit}>Submit</Button>
             </div>
