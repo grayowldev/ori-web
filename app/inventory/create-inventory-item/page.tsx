@@ -13,7 +13,17 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription, DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
 import {Progress} from "@/components/ui/progress";
+import OrderList from "@/components/ori-components/order-list";
 
 export default function CreateInventoryItem() {
     //Types
@@ -181,10 +191,32 @@ export default function CreateInventoryItem() {
             {showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}
             <div className={"item-container order-fetch-container"}>
                 <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
-                <Button className={"ml-2"} variant={"outline"}  onClick={triggerRightSlider}>
-                    Fetch Orders
-                </Button>
 
+
+                <Drawer>
+                    <DrawerTrigger>
+                        <Button className={"ml-2"} variant={"outline"}>
+                            Fetch Orders
+                        </Button>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        <DrawerHeader>
+                            <DrawerTitle>Available Purchased Orders</DrawerTitle>
+                            <DrawerDescription>Select an order from the list below</DrawerDescription>
+                        </DrawerHeader>
+                        <DrawerClose>
+                            <div className={"ml-8 mr-8"}>
+                                <OrderList orderSelection={handleOrderSelection}></OrderList>
+                            </div>
+                        </DrawerClose>
+                        <DrawerFooter>
+                            {/*<Button>Submit</Button>*/}
+                            <DrawerClose>
+                                <Button variant="outline">Cancel</Button>
+                            </DrawerClose>
+                        </DrawerFooter>
+                    </DrawerContent>
+                </Drawer>
             </div>
 
             {/*todo: Create table rows depending on number of items being created*/}
