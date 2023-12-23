@@ -1,9 +1,7 @@
 'use client'
-import OtTable from "@/components/OtTable/otTable";
-import OtThead from "@/components/OtTable/otThead";
+
 import { getInventory } from "@/services/inventory";
 import Link from "next/link";
-import {getAllOrders} from "@/services/ori/oriOrdering";
 import {useEffect, useState} from "react";
 import {Button, buttonVariants} from "@/components/ui/button";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
@@ -16,8 +14,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import {log} from "util";
-import {number} from "prop-types";
+
 
 
 export default function Inventory() {
