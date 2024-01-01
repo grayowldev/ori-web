@@ -30,9 +30,9 @@ export default function SideNavbar() {
             <div>
                 <Link href="/branch" className={"nav-link"}>Branches</Link>
             </div>
-            <div>
-                <Link href="/bin" className={"nav-link"}>Bins</Link>
-            </div>
+            {/*<div>*/}
+            {/*    <Link href="/bin" className={"nav-link"}>Bins</Link>*/}
+            {/*</div>*/}
             
         </nav>
     )
