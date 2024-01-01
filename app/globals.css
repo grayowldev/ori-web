@@ -197,3 +197,10 @@ body {
 .order-fetch-container {
   margin-bottom: 40px;
 }
+
+/*  Gradients */
+
+.custom-gradient {
+  background: rgb(255,216,74);
+  background: linear-gradient(36deg, rgba(255,216,74,1) 0%, rgba(251,145,63,1) 75%);
+}

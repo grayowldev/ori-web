@@ -1,5 +1,4 @@
 'use client'
-import {inspect} from "util";
 import {getAllOrders} from "@/services/ori/oriOrdering";
 import {useEffect, useState} from "react";
 
@@ -8,10 +7,6 @@ interface SliderProps {
     orderSelection: any;
 }
 export default function Slider({ isSidebarVisible, orderSelection }: SliderProps) {
-    // let orders = await getAllOrders() || [];
-    // if (!Array.isArray(orders)) {
-    //     orders = [];
-    // }
     const [orders, setOrders] = useState([]);
     useEffect(() => {
         async function getPurchaseOrders() {
@@ -47,15 +42,6 @@ export default function Slider({ isSidebarVisible, orderSelection }: SliderProps
         <div style={sidebarStyles}>
         {/*// <div>*/}
             <h3>Select Purchase Order</h3>
-            {/*<div>*/}
-            {/*   Order Item 1*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*   Order Item 2*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*   Order Item 3*/}
-            {/*</div>*/}
             {
                 orders.map((order: any) => {
                     return (
