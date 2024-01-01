@@ -8,6 +8,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {Button} from "@/components/ui/button";
+import ComingSoonDialog from "@/components/ori-components/ori-dialog/feature-coming";
 export default function BinTable(props: any) {
     return (
         <>
@@ -25,7 +26,8 @@ export default function BinTable(props: any) {
                             <TableRow key={data.id}>
                                 <TableCell>{data.name}</TableCell>
                                 <TableCell>{data.path}</TableCell>
-                                <TableCell><Button>Remove</Button></TableCell>
+                                <TableCell>
+                                    <ComingSoonDialog><Button>Remove</Button></ComingSoonDialog></TableCell>
                             </TableRow>
                         )
                     })}
