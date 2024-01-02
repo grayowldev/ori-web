@@ -17,7 +17,7 @@ export const getAllBanches = async () => {
 }
 
 export const addNewBranch = async(branch: BranchModel) => {
-    const res = await fetch(HOST + '/branch', {
+    return await fetch(HOST + '/branch', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
