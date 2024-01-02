@@ -1,6 +1,8 @@
+import {BranchModel} from "@/models/branch";
 
-// const HOST = 'https://tontally-core-production.up.railway.app';
-const HOST = "http://localhost:8080";
+
+const HOST = 'https://tontally-core-production.up.railway.app';
+// const HOST = "http://localhost:8080";
 
 export const getAllBanches = async () => {
     const res = await fetch(HOST +'/branch', {
@@ -14,7 +16,14 @@ export const getAllBanches = async () => {
     return data
 }
 
-export const addNewBranch = async() => {
+export const addNewBranch = async(branch: BranchModel) => {
+    const res = await fetch(HOST + '/branch', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(branch)
+    })
 }
 
 export const updateBranch = async() => {
