@@ -24,11 +24,14 @@ import {
 } from "@/components/ui/drawer"
 import {Progress} from "@/components/ui/progress";
 import OrderList from "@/components/ori-components/order-list";
+import {useRouter} from "next/navigation";
+
 
 export default function CreateInventoryItem() {
+    const router = useRouter();
     //Types
     type Row = {
-        id: number,
+        id?: number,
         name: string,
         goldGrossWeight: number,
         category: string,
@@ -42,7 +45,6 @@ export default function CreateInventoryItem() {
     const [itemQty, setItemQty] = useState(2)
     const [tableRows, setTableRows] = useState<Row[]>([
         {
-            id: 0,
             name: '',
             goldGrossWeight: 0.0,
             category: '',
