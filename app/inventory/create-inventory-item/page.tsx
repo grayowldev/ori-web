@@ -51,6 +51,7 @@ export default function CreateInventoryItem() {
         }
     ])
     const [weightSum, setWeightSum] = useState(1)
+
     const triggerRightSlider = () => {
         setShowRightSlider(!showRightSlider)
         console.log(showRightSlider)
@@ -67,11 +68,10 @@ export default function CreateInventoryItem() {
         console.log('generating...')
         setItemQty(itemQty + 1)
         console.log(typeof itemQty, itemQty)
-        setTableRows([])
-        let rows = []
-        for (let i = 0; i < itemQty; i++ ) {
+        // setTableRows([)
+        let rows = tableRows
+        for (let i = tableRows.length; i < itemQty; i++ ) {
             const newItem = {
-                id: i,
                 name: '',
                 goldGrossWeight: 0.0,
                 category: '',
@@ -167,17 +167,21 @@ export default function CreateInventoryItem() {
         return accumulator + currObj.goldGrossWeight
     }, 0)
 
-    let handleSubmit = async (event: any) => {
-        event.preventDefault();
-
+    const createItems = async () => {
+        console.log('function trigged')
         try {
             const response = await createInventoryItems(tableRows)
-            if (response.ok) {
+            if (!response.ok) {
                 throw new Error('Network response is not OK')
             }
         } catch ( error) {
             console.log(error)
         }
+    }
+    let handleSubmit = async (event: any) => {
+        event.preventDefault();
+        await createItems();
+        router.push('/inventory');
     }
 
 

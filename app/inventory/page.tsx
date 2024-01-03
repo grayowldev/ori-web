@@ -29,47 +29,6 @@ export default function Inventory() {
         quantity: 0
     })
 
-    let dataSet = [
-        {
-            id: "1",
-            name: 'Gold bracelet',
-            sku: 'abc1234',
-            metalType: 'Gold',
-            grossWeight: '54.32',
-            location: 'USA'
-        },
-        {
-            id: "2",
-            name: 'Gold bracelet 1',
-            sku: 'abc1234',
-            metalType: 'Gold',
-            grossWeight: '54.32',
-            location: 'USA'
-        },
-        {
-            id: "3",
-            name: 'Gold bracelet 2',
-            sku: 'abc1234',
-            metalType: 'Gold',
-            grossWeight: '54.32',
-            location: 'USA'
-        },
-        {
-            id: "4",
-            name: 'Gold bracelet 3',
-            sku: 'abc1234',
-            metalType: 'Gold',
-            grossWeight: '54.32',
-            location: 'USA'
-        }]
-
-        //  Getting inventory data from server
-        // let inventoryData: any[] = [];
-        // console.log(inventoryData);
-        // if (!Array.isArray(inventoryData)) {
-        //     inventoryData = [];
-        // }
-
     useEffect(() => {
         async function getInventoryData() {
             let data = await getInventory() || [];
@@ -88,10 +47,6 @@ export default function Inventory() {
         console.log(currentInventoryItemDetailed)
     }
 
-
-        
-        
-
     return (
         <div className={"content-container"}>
 
@@ -107,83 +62,6 @@ export default function Inventory() {
             {/*<div className="rounded-md border">*/}
             {/*    */}
             {/*</div>*/}
-
-
-
-
-
-            {/*<Table>*/}
-            {/*    <TableHeader>*/}
-            {/*        <TableRow>*/}
-            {/*            <TableHead>*/}
-            {/*                Item name*/}
-            {/*            </TableHead>*/}
-            {/*            <TableHead>*/}
-            {/*                SKU*/}
-            {/*            </TableHead>*/}
-            {/*            <TableHead>*/}
-            {/*                Metal type*/}
-            {/*            </TableHead>*/}
-            {/*            <TableHead>*/}
-            {/*                Gross Weight*/}
-            {/*            </TableHead>*/}
-            {/*            <TableHead>*/}
-            {/*                Location*/}
-            {/*            </TableHead>*/}
-            {/*            <TableHead>*/}
-            {/*                Actions*/}
-            {/*            </TableHead>*/}
-            {/*        </TableRow>*/}
-            {/*    </TableHeader>*/}
-            {/*    <TableBody>*/}
-            {/*        {*/}
-            {/*            inventoryData.map((data: any) => {*/}
-            {/*                return(*/}
-            {/*                    <TableRow key={data.id}>*/}
-            {/*                        <TableCell>*/}
-            {/*                            {data.name}*/}
-            {/*                        </TableCell>*/}
-            {/*                        <TableCell>*/}
-            {/*                            {data.sku}*/}
-            {/*                        </TableCell>*/}
-            {/*                        <TableCell>*/}
-            {/*                            {data.metalType}*/}
-            {/*                        </TableCell>*/}
-            {/*                        <TableCell>*/}
-            {/*                            {data.goldGrossWeight}*/}
-            {/*                        </TableCell>*/}
-            {/*                        <TableCell>*/}
-            {/*                            {data.location}*/}
-            {/*                        </TableCell>*/}
-            {/*                    </TableRow>*/}
-            {/*                )*/}
-            {/*            })*/}
-            {/*        }*/}
-            {/*        /!*{*!/*/}
-            {/*        /!*    inventoryData.map((data: any) => {*!/*/}
-            {/*        /!*        return(*!/*/}
-            {/*        /!*            <tr key={data.id} className="text-gray-700 border-b border-gray-300">*!/*/}
-            {/*        /!*                <td scope="row" className="px-6 py-4">*!/*/}
-            {/*        /!*                    {data.name}*!/*/}
-            {/*        /!*                </td>*!/*/}
-            {/*        /!*                <td scope="row" className="px-6 py-4">*!/*/}
-            {/*        /!*                    {data.sku}*!/*/}
-            {/*        /!*                </td>*!/*/}
-            {/*        /!*                <td scope="row" className="px-6 py-4">*!/*/}
-            {/*        /!*                    {data.metalType}*!/*/}
-            {/*        /!*                </td>*!/*/}
-            {/*        /!*                <td scope="row" className="px-6 py-4">*!/*/}
-            {/*        /!*                    {data.grossWeight}*!/*/}
-            {/*        /!*                </td>*!/*/}
-            {/*        /!*                <td scope="row" className="px-6 py-4">*!/*/}
-            {/*        /!*                    {data.location}*!/*/}
-            {/*        /!*                </td>*!/*/}
-            {/*        /!*            </tr>*!/*/}
-            {/*        /!*        )*!/*/}
-            {/*        /!*    })*!/*/}
-            {/*        /!*}*!/*/}
-            {/*    </TableBody>*/}
-            {/*</Table>*/}
 
             <Drawer>
                 <DrawerTrigger>
