@@ -30,6 +30,14 @@ export const updateBranch = async() => {
     
 }
 
-export const deleteBranch = async() => {
+export const deleteBranch = async(id: string) => {
+    const res = await fetch(HOST + `/branch/${id}`, {
+        method: 'DELETE'
+    })
 
+    const data = await res.json()
+    if (!data) {
+        throw new Error('No data found')
+    }
+    return data;
 }

@@ -6,16 +6,27 @@ import {useEffect, useState} from "react";
 import {getAllBins} from "@/services/bin";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {buttonVariants} from "@/components/ui/button";
+import OriTable from "@/components/ori-components/ori-table/ori-table";
+import {id} from "postcss-selector-parser";
 
 export default function Ordering() {
 
+    //  Types
+    type PurchaseItem = {
+        id? : number,
+        description: string,
+        grossWeight: number,
+        stoneWeight: number,
+        netWeight: number,
+        pureWeight: number,
+        karat: number,
+        rate: number,
+        amount: number
 
-    // let orders = await getAllOrders() || [];
-    // if (!Array.isArray(orders)) {
-    //     orders = [];
-    // }
+    }
+    const keysToShow: Array<keyof PurchaseItem> = ['id', "description", "grossWeight", "stoneWeight", "netWeight", "pureWeight", "karat", "rate", "amount"];
 
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState<PurchaseItem[]>([]);
 
     useEffect( () => {
         async function getOrders() {
@@ -28,6 +39,33 @@ export default function Ordering() {
         getOrders();
         console.log(orders)
     })
+    const headers: string[] = [
+        "Order Number",
+        "Name",
+        "Gross Weight",
+        "Stone Weight",
+        "Net Weight",
+        "Pure Weight",
+        "Karat",
+        "Rate",
+        "Amount",
+        "Action"
+    ]
+
+    //TODO: Create service to handle this
+     const handleDelete = async (id: any) => {
+        console.log("Delete clicked ", id)
+         const HOST = 'https://tontally-core-production.up.railway.app';
+        const response = await fetch(HOST + `/ori/ordering/id/${id}`, {
+            method: "DELETE"
+        })
+         const data = await  response.json();
+
+         if (!data) {
+             throw new Error('Failed to fetch products')
+         }
+         return data
+    }
 
     return(
         <>
@@ -36,47 +74,8 @@ export default function Ordering() {
             </Link>
 
             <div className="overflow-x-auto">
-                <Table className="table table-zebra">
-
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Order Number</TableHead>
-                            <TableHead>Description</TableHead>
-                            <TableHead>Gross Weight</TableHead>
-                            <TableHead>Stone Weight</TableHead>
-                            <TableHead>Net Weight</TableHead>
-                            <TableHead>Pure Weight</TableHead>
-                            <TableHead>Karat</TableHead>
-                            <TableHead>Rate</TableHead>
-                            <TableHead>Amount</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                    {
-                        orders.map((e:any) => {
-                            return (
-                                <>
-                                    <TableRow className="hover">
-                                        <TableCell>{e.id}</TableCell>
-                                        <TableCell>{e.description}</TableCell>
-                                        <TableCell>{e.grossWeight}</TableCell>
-                                        <TableCell>{e.stoneWeight}</TableCell>
-                                        <TableCell>{e.netWeight}</TableCell>
-                                        <TableCell>{e.pureWeight}</TableCell>
-                                        <TableCell>{e.karat}</TableCell>
-                                        <TableCell>{e.rate}</TableCell>
-                                        <TableCell>{e.amount}</TableCell>
-                                    </TableRow>
-                                </>
-                            )
-                        })
-                    }
-                    </TableBody>
-                </Table>
+                <OriTable<PurchaseItem> headers={headers} itemData={orders} keysToShow={keysToShow} deleteItem={handleDelete}></OriTable>
             </div>
-
-
-            
         </>
     )
 }

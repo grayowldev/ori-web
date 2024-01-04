@@ -1,8 +1,8 @@
 import Bin from "@/app/bin/page";
 import { BinModel } from "@/models/bin";
 
-// const HOST = 'https://tontally-core-production.up.railway.app';
-const HOST = "http://localhost:8080";
+const HOST = 'https://tontally-core-production.up.railway.app';
+// const HOST = "http://localhost:8080";
 
 export const getAllBins = async () => {
     const res = await fetch(HOST +'/bin/getAllBins', {
