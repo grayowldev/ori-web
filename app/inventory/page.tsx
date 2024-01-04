@@ -1,6 +1,6 @@
 'use client'
 
-import { getInventory } from "@/services/inventory";
+import {deleteInventoryItem, getInventory} from "@/services/inventory";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {Button, buttonVariants} from "@/components/ui/button";
@@ -47,6 +47,11 @@ export default function Inventory() {
         console.log(currentInventoryItemDetailed)
     }
 
+    const handleDelete = async (id: string) => {
+        console.log('deleting object with id ', id)
+        return await deleteInventoryItem(id)
+    }
+
     return (
         <div className={"content-container"}>
 
@@ -56,12 +61,6 @@ export default function Inventory() {
             <div className={"title-container"}>
                 <Link className={buttonVariants({ variant: "outline" })} href={"inventory/create-inventory-item"}>Create Item</Link>
             </div>
-
-            {/* <div className="h-20 bg-red-700">Title & add item row</div> */}
-            {/* <div className="h-16 bg-blue-700">Search and Filter row</div> */}
-            {/*<div className="rounded-md border">*/}
-            {/*    */}
-            {/*</div>*/}
 
             <Drawer>
                 <DrawerTrigger>
@@ -113,7 +112,7 @@ export default function Inventory() {
                                             <DrawerTrigger>
                                                 <Button onClick={() => setItem(data)}>Show more</Button>
                                             </DrawerTrigger>
-
+                                            <Button onClick={() => handleDelete(data.id)}>Delete</Button>
                                         </TableCell>
                                     </TableRow>
                                 )
@@ -158,7 +157,6 @@ export default function Inventory() {
                     {/*</DrawerFooter>*/}
                 </DrawerContent>
             </Drawer>
-
         </div>
         
     )

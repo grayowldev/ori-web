@@ -1,6 +1,5 @@
 
 const HOST = 'https://tontally-core-production.up.railway.app';
-// const HOST = 'http://localhost:8080';
 
 export const getInventory: any = async () => {
     const res = await fetch(HOST + '/bulkItem/getAllBulkItems', {
@@ -35,5 +34,14 @@ export const createInventoryItems: any = async (data: object) => {
 
 export const updateInventoryItem: any = async () => {}
 
-export const deleteInventoryItem: any = async () => {}
+export const deleteInventoryItem: any = async (id: string) => {
+    const res = await fetch(HOST + `/bulkItem/deleteBulkItem/${id}`, {
+        method: 'DELETE'
+    })
+
+    if (!res) {
+        throw new Error('DELETE FAILED')
+    }
+    return await res.json()
+}
 
