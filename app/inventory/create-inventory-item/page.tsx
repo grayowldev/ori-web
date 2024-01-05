@@ -53,6 +53,13 @@ export default function CreateInventoryItem() {
         }
     ])
     const [weightSum, setWeightSum] = useState(1)
+    const ktValues: any = {
+        kt10: 10,
+        kt14: 14,
+        kt18: 18,
+        kt22: 22,
+        kt24: 24
+    }
 
     const triggerRightSlider = () => {
         setShowRightSlider(!showRightSlider)
@@ -150,13 +157,8 @@ export default function CreateInventoryItem() {
 
     let updateMetalPurity = (id: number, event:any) => {
         let data = tableRows
-        const updatedRows =  tableRows.map(obj => {
-            if (obj.id === id && event.target) {
-                console.log('found')
-                return {...obj, karat: event.target.value}
-            }
-            return obj;
-        })
+        const updatedRows = tableRows
+        updatedRows[id].karat = Number(event)
         setTableRows(updatedRows)
         console.log(tableRows)
     }
@@ -258,6 +260,20 @@ export default function CreateInventoryItem() {
                                         </TableCell>
                                         <TableCell>
                                             <input type={"number"} placeholder={'0.0'} onChange={(e) => updateMetalPurity(item.id, e)}/>
+                                            <Select onValueChange={(e) => updateMetalPurity(index, e)}>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder={"Select the metal purity"} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        {
+                                                            Object.keys(ktValues).map((key) => (
+                                                                    <SelectItem key={key} value={ktValues[key]}>{ktValues[key]} kt</SelectItem>
+                                                            ))
+                                                        }
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
                                         </TableCell>
                                     </TableRow>
                                 )
