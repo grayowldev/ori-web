@@ -25,7 +25,7 @@ import {
 import {Progress} from "@/components/ui/progress";
 import OrderList from "@/components/ori-components/order-list";
 import {useRouter} from "next/navigation";
-
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 
 export default function CreateInventoryItem() {
     const router = useRouter();
@@ -38,7 +38,6 @@ export default function CreateInventoryItem() {
         subCategory: string,
         karat: number
     }
-
 
     const [showRightSlider, setShowRightSlider] = useState(false);
     const [purchaseOrder, setPurchaseOrder] = useState(null);
@@ -71,9 +70,7 @@ export default function CreateInventoryItem() {
         console.log('order: ',purchaseOrder)
     }
 
-
     let generateTableRows = () => {
-
         console.log('generating...')
         setItemQty(itemQty + 1)
         console.log(typeof itemQty, itemQty)
@@ -93,74 +90,43 @@ export default function CreateInventoryItem() {
         console.log(tableRows)
     }
 
-
     // Update Fields in rowData
     let updateName = (id: number, event:any) => {
-        console.log(id)
-        let data = tableRows
-        console.log(data)
-        console.log(event)
-        const updatedRows =  tableRows.map(obj => {
-             if (obj.id === id && event.target) {
-                console.log('found')
-
-                return {...obj, name: event.target.value}
-            }
-            return obj;
-        })
+        const updatedRows = tableRows
+        updatedRows[id].name = event.target.value
         setTableRows(updatedRows)
-        console.log(data,tableRows)
+        console.log(tableRows)
     }
 
     let updateWeight = (id: number, event:any) => {
-        let data = tableRows
-        const updatedRows =  tableRows.map(obj => {
-            if (obj.id === id && event.target) {
-                console.log('found')
-                return {...obj, goldGrossWeight: Number(event.target.value)}
-            }
-            return obj;
-        })
-        console.log(getCurrSum)
+        const updatedRows = tableRows
+        updatedRows[id].goldGrossWeight = Number(event.target.value)
+        // console.log(getCurrSum)
         setWeightSum(getCurrSum)
-        console.log('@@@',weightSum)
+        // console.log('@@@',weightSum)
         setTableRows(updatedRows)
         console.log(tableRows)
-        console.log('@@@1',weightSum)
+        // console.log('@@@1',weightSum)
     }
 
     let updateCategory = (id: number, event:any) => {
-        let data = tableRows
-        const updatedRows =  tableRows.map(obj => {
-            if (obj.id === id && event.target) {
-                console.log('found')
-                return {...obj, category: event.target.value}
-            }
-            return obj;
-        })
+        const updatedRows = tableRows
+        updatedRows[id].category = event.target.value
         setTableRows(updatedRows)
         console.log(tableRows)
     }
 
     let updateStyle = (id: number, event:any) => {
-        let data = tableRows
-        const updatedRows =  tableRows.map(obj => {
-            if (obj.id === id && event.target) {
-                console.log('found')
-                return {...obj, subCategory: event.target.value}
-            }
-            return obj;
-        })
+        const updatedRows = tableRows
+        updatedRows[id].subCategory = event.target.value
         setTableRows(updatedRows)
         console.log(tableRows)
     }
 
     let updateMetalPurity = (id: number, event:any) => {
-        let data = tableRows
         const updatedRows = tableRows
         updatedRows[id].karat = Number(event)
         setTableRows(updatedRows)
-        console.log(tableRows)
     }
 
     const getCurrSum = tableRows.reduce((accumulator, currObj) => {
@@ -188,18 +154,15 @@ export default function CreateInventoryItem() {
         router.push('/inventory');
     }
 
-
     return (
         <div className={"content-container"}>
             <div className={"title-container"}>
                 <h1 className={"title"}>Add New Items</h1>
             </div>
 
-
             {showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}
             <div className={"item-container order-fetch-container"}>
                 <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
-
 
                 <Drawer>
                     <DrawerTrigger>
@@ -228,7 +191,6 @@ export default function CreateInventoryItem() {
             </div>
 
             {/*todo: Create table rows depending on number of items being created*/}
-
             <div className={"w-max border-solid border-2 rounded-lg p-8"}>
                 <Table>
                     <TableHeader>
@@ -237,7 +199,7 @@ export default function CreateInventoryItem() {
                         <TableHead>Weight</TableHead>
                         <TableHead>Category</TableHead>
                         <TableHead>Style</TableHead>
-                        <TableHead>Metal Purity</TableHead>
+                        <TableHead>Metal Purity (kt)</TableHead>
                     </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -247,19 +209,18 @@ export default function CreateInventoryItem() {
                                 return (
                                     <TableRow key={item.id}>
                                         <TableCell>
-                                            <input placeholder={'Enter description'} onChange={(e) => updateName(item.id, e)}/>
+                                            <Input placeholder={"Enter item name"} onChange={( event) => updateName(index, event)}></Input>
                                         </TableCell>
                                         <TableCell>
-                                            <input type={"number"} placeholder={'0.0'} onChange={(e) => updateWeight(item.id, e)}/>
+                                            <Input placeholder={"Enter item weight"} onChange={( event) => updateWeight(index, event)}></Input>
                                         </TableCell>
                                         <TableCell>
-                                            <input type={"text"} placeholder={'Enter Category'} onChange={(e) => updateCategory(item.id, e)}/>
+                                            <Input placeholder={"Enter category"} onChange={( event) => updateCategory(index, event)}></Input>
                                         </TableCell>
                                         <TableCell>
-                                            <input type={"text"} placeholder={'Enter Style'} onChange={(e) => updateStyle(item.id, e)}/>
+                                            <Input placeholder={"Enter style"} onChange={( event) => updateStyle(index, event)}></Input>
                                         </TableCell>
                                         <TableCell>
-                                            <input type={"number"} placeholder={'0.0'} onChange={(e) => updateMetalPurity(item.id, e)}/>
                                             <Select onValueChange={(e) => updateMetalPurity(index, e)}>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder={"Select the metal purity"} />
@@ -287,10 +248,6 @@ export default function CreateInventoryItem() {
                 </div>
                 <Button onClick={handleSubmit}>Submit</Button>
             </div>
-
-
-
-
             <div className={"w-max border-solid border-2 rounded-lg p-8"}>
                 <div>
                     <h3>Total Order Weight</h3>
@@ -302,9 +259,6 @@ export default function CreateInventoryItem() {
 
                 </div>
             </div>
-
-
         </div>
-
     )
 }
