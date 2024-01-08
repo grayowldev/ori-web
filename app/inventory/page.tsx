@@ -14,8 +14,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-
-
+import {Trash2} from "lucide-react";
 
 export default function Inventory() {
     const [inventoryData, setinventoryData] = useState([]);
@@ -108,11 +107,13 @@ export default function Inventory() {
                                         <TableCell>
                                             {data.location}
                                         </TableCell>
-                                        <TableCell>
-                                            <DrawerTrigger>
-                                                <Button onClick={() => setItem(data)}>Show more</Button>
-                                            </DrawerTrigger>
-                                            <Button onClick={() => handleDelete(data.id)}>Delete</Button>
+                                        <TableCell className={"flex"}>
+                                                <DrawerTrigger>
+                                                    <Button onClick={() => setItem(data)}>Show more</Button>
+                                                </DrawerTrigger>
+                                                <Button variant={"ghost"} onClick={() => handleDelete(data.id)}>
+                                                    <Trash2></Trash2>
+                                                </Button>
                                         </TableCell>
                                     </TableRow>
                                 )
