@@ -26,6 +26,7 @@ import {Progress} from "@/components/ui/progress";
 import OrderList from "@/components/ori-components/order-list";
 import {useRouter} from "next/navigation";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import OriProgress from "@/components/ori-components/ori-progress/ori-progress";
 
 export default function CreateInventoryItem() {
     const router = useRouter();
@@ -51,7 +52,8 @@ export default function CreateInventoryItem() {
             karat: 0.0
         }
     ])
-    const [weightSum, setWeightSum] = useState(1)
+    const [weightSum, setWeightSum] = useState(0)
+    const [weightProgress, setWeightProgress] = useState(0)
     const ktValues: any = {
         kt10: 10,
         kt14: 14,
@@ -101,12 +103,9 @@ export default function CreateInventoryItem() {
     let updateWeight = (id: number, event:any) => {
         const updatedRows = tableRows
         updatedRows[id].goldGrossWeight = Number(event.target.value)
-        // console.log(getCurrSum)
-        setWeightSum(getCurrSum)
-        // console.log('@@@',weightSum)
+        getCurrSum()
         setTableRows(updatedRows)
         console.log(tableRows)
-        // console.log('@@@1',weightSum)
     }
 
     let updateCategory = (id: number, event:any) => {
@@ -129,13 +128,19 @@ export default function CreateInventoryItem() {
         setTableRows(updatedRows)
     }
 
-    const getCurrSum = tableRows.reduce((accumulator, currObj) => {
-        console.log("acc", accumulator)
-        console.log(currObj.goldGrossWeight)
-        console.log(accumulator + currObj.goldGrossWeight)
-        // setWeightSum(accumulator + currObj.goldGrossWeight)
-        return accumulator + currObj.goldGrossWeight
-    }, 0)
+    const getCurrSum =() => {
+        const sum = tableRows.reduce((accumulator, currObj) => {
+            console.log("acc", accumulator)
+            console.log(currObj.goldGrossWeight)
+            console.log(accumulator + currObj.goldGrossWeight)
+            // setWeightSum(accumulator + currObj.goldGrossWeight)
+            return accumulator + currObj.goldGrossWeight
+        }, 0);
+        setWeightSum(sum)
+        if (purchaseOrder) {
+            setWeightProgress(sum / purchaseOrder['grossWeight'] * 100)
+        }
+    }
 
     const createItems = async () => {
         console.log('function trigged')
@@ -160,35 +165,48 @@ export default function CreateInventoryItem() {
                 <h1 className={"title"}>Add New Items</h1>
             </div>
 
-            {showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}
-            <div className={"item-container order-fetch-container"}>
-                <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
+            {/*{showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}*/}
+            <div className={'mb-10 flex'}>
+                <div className={"item-container order-fetch-container"}>
+                    <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
 
-                <Drawer>
-                    <DrawerTrigger>
-                        <Button className={"ml-2"} variant={"outline"}>
-                            Fetch Orders
-                        </Button>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                        <DrawerHeader>
-                            <DrawerTitle>Available Purchased Orders</DrawerTitle>
-                            <DrawerDescription>Select an order from the list below</DrawerDescription>
-                        </DrawerHeader>
-                        <DrawerClose>
-                            <div className={"ml-8 mr-8"}>
-                                <OrderList orderSelection={handleOrderSelection}></OrderList>
-                            </div>
-                        </DrawerClose>
-                        <DrawerFooter>
-                            {/*<Button>Submit</Button>*/}
+                    <Drawer>
+                        <DrawerTrigger>
+                            <Button className={"ml-2"} variant={"outline"}>
+                                Fetch Orders
+                            </Button>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                            <DrawerHeader>
+                                <DrawerTitle>Available Purchased Orders</DrawerTitle>
+                                <DrawerDescription>Select an order from the list below</DrawerDescription>
+                            </DrawerHeader>
                             <DrawerClose>
-                                <Button variant="outline">Cancel</Button>
+                                <div className={"ml-8 mr-8"}>
+                                    <OrderList orderSelection={handleOrderSelection}></OrderList>
+                                </div>
                             </DrawerClose>
-                        </DrawerFooter>
-                    </DrawerContent>
-                </Drawer>
+                            <DrawerFooter>
+                                <DrawerClose>
+                                    <Button variant="outline">Cancel</Button>
+                                </DrawerClose>
+                            </DrawerFooter>
+                        </DrawerContent>
+                    </Drawer>
+                </div>
+                <div className={'ml-auto mr-56'}>
+                    {
+                        purchaseOrder ?
+                            <OriProgress
+                                progressPercentage={weightProgress}
+                                weight={purchaseOrder['grossWeight']}
+                                sum={weightSum}>
+                            </OriProgress> : <></>
+                    }
+                </div>
             </div>
+
+
 
             {/*todo: Create table rows depending on number of items being created*/}
             <div className={"w-max border-solid border-2 rounded-lg p-8"}>
@@ -246,18 +264,7 @@ export default function CreateInventoryItem() {
                 <div className={"w-full inline flex place-content-center w-100%"}>
                     <Button variant={"outline"} className={"center"} onClick={generateTableRows}>+ Add item</Button>
                 </div>
-                <Button onClick={handleSubmit}>Submit</Button>
-            </div>
-            <div className={"w-max border-solid border-2 rounded-lg p-8"}>
-                <div>
-                    <h3>Total Order Weight</h3>
-                    <h4>{purchaseOrder != null ? purchaseOrder['grossWeight'] : 'Fetch and order'}</h4>
-                    <div>
-                        Current Sum: {weightSum}
-                        { purchaseOrder != null ? <Progress value={weightSum / purchaseOrder['grossWeight'] * 100} /> : null}
-                    </div>
-
-                </div>
+                <Button disabled={!purchaseOrder} onClick={handleSubmit}>Submit</Button>
             </div>
         </div>
     )

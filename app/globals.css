@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
+    background-color: whitesmoke;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
@@ -102,6 +103,7 @@ body {
   height: 48px;
   width: calc(100vw - 12rem);
   align-items: center;
+  border: black;
 }
 
 .top-navbar-title-span {
