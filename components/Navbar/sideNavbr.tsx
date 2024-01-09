@@ -13,7 +13,6 @@ export default function SideNavbar() {
                         height={100}
                         alt="logo"/>
                 </Link>
-
             </div>
 
             <div>
@@ -30,10 +29,10 @@ export default function SideNavbar() {
             <div>
                 <Link href="/branch" className={"nav-link"}>Branches</Link>
             </div>
-            {/*<div>*/}
-            {/*    <Link href="/bin" className={"nav-link"}>Bins</Link>*/}
-            {/*</div>*/}
-            
+            <div>
+                <Link href="/settings" className={"nav-link"}>Settings</Link>
+            </div>
+
         </nav>
     )
 }
