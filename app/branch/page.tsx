@@ -19,7 +19,7 @@ export default function Branch() {
     return (
         <main>
             {/*<TopNavbar />*/}
-            <div className="page-content">
+            <div className="page-content p-8">
                 <div className={"grid grid-cols-1 md:grid-cols-4 gap-9"}>
                     <AddBranchCard></AddBranchCard>
                     {
