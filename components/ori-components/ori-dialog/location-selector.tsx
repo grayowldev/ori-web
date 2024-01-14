@@ -15,13 +15,13 @@ export default function LocationSelector(props: any) {
         <>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline">Edit Profile</Button>
+                    <Button variant="outline">Set item location</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>Edit profile</DialogTitle>
                         <DialogDescription>
-                            Make changes to your profile here. Click save when you're done.
+                            Text.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
