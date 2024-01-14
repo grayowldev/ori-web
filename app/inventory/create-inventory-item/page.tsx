@@ -27,6 +27,7 @@ import OrderList from "@/components/ori-components/order-list";
 import {useRouter} from "next/navigation";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import OriProgress from "@/components/ori-components/ori-progress/ori-progress";
+import LocationSelector from "@/components/ori-components/ori-dialog/location-selector";
 
 export default function CreateInventoryItem() {
     const router = useRouter();
@@ -193,6 +194,10 @@ export default function CreateInventoryItem() {
                             </DrawerFooter>
                         </DrawerContent>
                     </Drawer>
+                    <div>
+                        <LocationSelector></LocationSelector>
+                    </div>
+
                 </div>
                 <div className={'ml-auto mr-56'}>
                     {
