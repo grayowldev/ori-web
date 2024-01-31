@@ -30,6 +30,9 @@ export default function SideNavbar() {
                 <Link href="/branch" className={"nav-link"}>Branches</Link>
             </div>
             <div>
+                <Link href="/bin" className={"nav-link"}>Bins</Link>
+            </div>
+            <div>
                 <Link href="/settings" className={"nav-link"}>Settings</Link>
             </div>
 
