@@ -22,10 +22,11 @@ export default function BinTable(props: any) {
                 </TableHeader>
                 <TableBody>
                     {props.bins.map((data: any) => {
+                        console.log(data)
                         return (
                             <TableRow key={data.id}>
                                 <TableCell>{data.name}</TableCell>
-                                <TableCell>{data.path}</TableCell>
+                                <TableCell>{data.pathByNames}</TableCell>
                                 <TableCell>
                                     <ComingSoonDialog><Button>Remove</Button></ComingSoonDialog></TableCell>
                             </TableRow>

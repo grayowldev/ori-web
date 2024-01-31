@@ -1,6 +1,6 @@
 
-const HOST = 'https://tontally-core-production.up.railway.app';
-// const HOST = 'http://localhost:8080';
+// const HOST = 'https://tontally-core-production.up.railway.app';
+const HOST = 'http://localhost:8080';
 export const getPathTree: any = async () => {
     const res = await fetch(HOST + '/location', {
         cache: 'no-cache'

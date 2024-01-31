@@ -38,7 +38,8 @@ export default function CreateInventoryItem() {
         goldGrossWeight: number,
         category: string,
         subCategory: string,
-        karat: number
+        karat: number,
+        location: string
     }
 
     const [showRightSlider, setShowRightSlider] = useState(false);
@@ -50,7 +51,8 @@ export default function CreateInventoryItem() {
             goldGrossWeight: 0.0,
             category: '',
             subCategory: '',
-            karat: 0.0
+            karat: 0.0,
+            location: ''
         }
     ])
     const [weightSum, setWeightSum] = useState(0)
@@ -62,6 +64,7 @@ export default function CreateInventoryItem() {
         kt22: 22,
         kt24: 24
     }
+    const [itemsLocation, setItemsLocation] = useState('')
 
     const triggerRightSlider = () => {
         setShowRightSlider(!showRightSlider)
@@ -85,7 +88,8 @@ export default function CreateInventoryItem() {
                 goldGrossWeight: 0.0,
                 category: '',
                 subCategory: '',
-                karat: 0.0
+                karat: 0.0,
+                location: ''
             }
             rows.push(newItem)
         }
@@ -145,6 +149,10 @@ export default function CreateInventoryItem() {
 
     const createItems = async () => {
         console.log('function trigged')
+        tableRows.map((row) => {
+            row.location = itemsLocation
+        })
+        console.log(tableRows)
         try {
             const response = await createInventoryItems(tableRows)
             if (!response.ok) {

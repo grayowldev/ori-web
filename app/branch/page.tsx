@@ -1,5 +1,5 @@
 'use client'
-import { getAllBanches } from "@/services/branch";
+import { getAllBranches } from "@/services/branch";
 import {useEffect, useState} from "react";
 import BranchCard from "@/components/ori-components/ori-card/branch-card";
 import AddBranchCard from "@/components/ori-components/ori-card/add-branch-card";
@@ -9,7 +9,7 @@ export default function Branch() {
 
     useEffect(() => {
         async function getBranchData() {
-            let branchData = await getAllBanches() || []
+            let branchData = await getAllBranches() || []
             setBranches(branchData)
             console.log(branchData)
         }
