@@ -5,7 +5,7 @@ import { BinModel } from "@/models/bin";
 const HOST = process.env.NEXT_PUBLIC_HOST + '/bin';
 
 export const getAllBins = async () => {
-    console.log("HOST")
+    console.log(HOST)
     const res = await fetch(HOST, {
         cache: 'no-cache'
       })
