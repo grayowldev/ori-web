@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import BinTable from "@/components/ori-components/ori-table/bin-table";
 import SubmitDrawer from "@/components/ori-components/ori-drawer/submit-drawer";
+import Branch from "@/app/branch/page";
+import {BranchModel} from "@/models/branch";
+import {getBranchByBranchId} from "@/services/branch";
 
 export default function BranchBins(
     {
@@ -14,6 +17,9 @@ export default function BranchBins(
     }
 ) {
     const [bins, setBins] = useState([])
+    const [parentBranch, setParentbranch] = useState<BranchModel>({
+        name: '',
+    })
     const nameInputRef: any = useRef();
     useEffect(() => {
         async function getBinData() {
@@ -21,18 +27,26 @@ export default function BranchBins(
             let data = await getBinByBranchId(params.branchId) || []
             setBins(data)
         }
-        getBinData()
+        async function getBranchData() {
+            let data = await getBranchByBranchId(params.branchId) || [];
+            setParentbranch(data)
+        }
+
+        getBinData();
+        getBranchData();
     },[])
 
     const handleBinSubmit = async (event: any) => {
         const newBin = {
             parentId: Number(params.branchId),
             name: '',
-            path: '/'+params.branchId,
+            pathByIds: '/' + params.branchId,
+            pathByNames: '',
             parentIsBranch: true
         }
         if (nameInputRef.current.value != '') {
             newBin.name = nameInputRef.current.value
+            newBin.pathByNames = parentBranch.name + "/ " + nameInputRef.current.value
         }
 
         try {
