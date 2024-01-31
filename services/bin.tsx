@@ -1,11 +1,12 @@
 import Bin from "@/app/bin/page";
 import { BinModel } from "@/models/bin";
 
-const HOST = 'https://tontally-core-production.up.railway.app';
-// const HOST = "http://localhost:8080";
+// const HOST = 'https://tontally-core-production.up.railway.app';
+const HOST = process.env.NEXT_PUBLIC_HOST + '/bin';
 
 export const getAllBins = async () => {
-    const res = await fetch(HOST +'/bin/getAllBins', {
+    console.log("HOST")
+    const res = await fetch(HOST, {
         cache: 'no-cache'
       })
     const data = await res.json()
@@ -18,7 +19,7 @@ export const getAllBins = async () => {
 }
 
 export const getBinById = async (id: string) => {
-    const res = await fetch(HOST +`/bin/getBinById/${id}`, {
+    const res = await fetch(HOST +`/getBinById/${id}`, {
         cache: 'no-cache'
     })
     const data = await res.json()
@@ -31,7 +32,7 @@ export const getBinById = async (id: string) => {
 }
 
 export const getBinByBranchId = async (id: string) => {
-    const res = await fetch(HOST +`/bin/getBinByBranchId/${id}`, {
+    const res = await fetch(HOST +`/getBinByBranchId/${id}`, {
         cache: 'no-cache'
     })
     const data = await res.json()
@@ -44,7 +45,7 @@ export const getBinByBranchId = async (id: string) => {
 }
 
 export const addNewBin = async(bin: BinModel) => {
-    return await fetch(HOST+'/bin', {
+    return await fetch(HOST, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
