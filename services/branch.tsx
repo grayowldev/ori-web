@@ -1,11 +1,9 @@
 import {BranchModel} from "@/models/branch";
 
-
-// const HOST = 'https://tontally-core-production.up.railway.app';
-const HOST = "http://localhost:8080";
+const HOST = process.env.NEXT_PUBLIC_HOST + '/branch'
 
 export const getAllBranches = async () => {
-    const res = await fetch(HOST +'/branch', {
+    const res = await fetch(HOST, {
         cache: 'no-cache'
       })
     const data = await res.json()
@@ -18,7 +16,7 @@ export const getAllBranches = async () => {
 
 export const getBranchByBranchId =  async (id: string) => {
     console.log(id)
-    const res = await fetch(HOST + `/branch/getBranchById/${id}`, {
+    const res = await fetch(HOST + `/getBranchById/${id}`, {
         cache: 'no-cache'
     })
     const data = await res.json()
@@ -30,7 +28,7 @@ export const getBranchByBranchId =  async (id: string) => {
 }
 
 export const addNewBranch = async(branch: BranchModel) => {
-    return await fetch(HOST + '/branch', {
+    return await fetch(HOST, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -44,7 +42,7 @@ export const updateBranch = async() => {
 }
 
 export const deleteBranch = async(id: string) => {
-    const res = await fetch(HOST + `/branch/${id}`, {
+    const res = await fetch(HOST + `/${id}`, {
         method: 'DELETE'
     })
 

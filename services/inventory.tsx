@@ -1,8 +1,8 @@
 
-const HOST = 'https://tontally-core-production.up.railway.app';
+const HOST = process.env.NEXT_PUBLIC_HOST + '/bulkItem';
 
 export const getInventory: any = async () => {
-    const res = await fetch(HOST + '/bulkItem/getAllBulkItems', {
+    const res = await fetch(HOST + '/getAllBulkItems', {
         cache: 'no-cache'
     })
     const inventoryData = await res.json()
@@ -10,7 +10,6 @@ export const getInventory: any = async () => {
     if (inventoryData) {
         return inventoryData;
     }
-
     throw new Error('Failed to fetch inventory')
 }
 
@@ -19,15 +18,13 @@ export const getInventoryItemById: any = async () => {}
 export const createInventoryItem: any = async () => {}
 
 export const createInventoryItems: any = async (data: object) => {
-    const response = await fetch(HOST + '/bulkItem/addBulkItems', {
+    const response = await fetch(HOST + '/addBulkItems', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
     });
-    console.log('data', data)
-
     return response;
 
 }
@@ -35,7 +32,7 @@ export const createInventoryItems: any = async (data: object) => {
 export const updateInventoryItem: any = async () => {}
 
 export const deleteInventoryItem: any = async (id: string) => {
-    const res = await fetch(HOST + `/bulkItem/deleteBulkItem/${id}`, {
+    const res = await fetch(HOST + `/deleteBulkItem/${id}`, {
         method: 'DELETE'
     })
 

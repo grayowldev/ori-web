@@ -1,11 +1,8 @@
-import Bin from "@/app/bin/page";
 import { BinModel } from "@/models/bin";
 
-// const HOST = 'https://tontally-core-production.up.railway.app';
 const HOST = process.env.NEXT_PUBLIC_HOST + '/bin';
 
 export const getAllBins = async () => {
-    console.log(HOST)
     const res = await fetch(HOST, {
         cache: 'no-cache'
       })
