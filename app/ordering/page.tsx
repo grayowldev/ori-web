@@ -1,13 +1,15 @@
 'use client'
 import Link from "next/link"
 import Router from "next/router"
-import {getAllOrders} from "@/services/ori/oriOrdering";
+import {deleteOrder, getAllOrders} from "@/services/ori/oriOrdering";
 import {useEffect, useState} from "react";
 import {getAllBins} from "@/services/bin";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {buttonVariants} from "@/components/ui/button";
+import {Button, buttonVariants} from "@/components/ui/button";
 import OriTable from "@/components/ori-components/ori-table/ori-table";
 import {id} from "postcss-selector-parser";
+import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
+import OrderForm from "@/app/ordering/create-purchase-order/OrderForm";
 
 export default function Ordering() {
 
@@ -52,26 +54,26 @@ export default function Ordering() {
         "Action"
     ]
 
-    //TODO: Create service to handle this
      const handleDelete = async (id: any) => {
-        console.log("Delete clicked ", id)
-         const HOST = 'https://tontally-core-production.up.railway.app';
-        const response = await fetch(HOST + `/ori/ordering/id/${id}`, {
-            method: "DELETE"
-        })
-         const data = await  response.json();
-
-         if (!data) {
-             throw new Error('Failed to fetch products')
-         }
-         return data
+         return await deleteOrder(id)
     }
 
     return(
         <>
-            <Link className={buttonVariants({ variant: "default" })} href="/ordering/create-purchase-order">
-                New purchase order
-            </Link>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant={"outline"}>Create Order</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>New Purchase Order</DialogTitle>
+
+                    </DialogHeader>
+                    <div>
+                        <OrderForm />
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             <div className="overflow-x-auto">
                 <OriTable<PurchaseItem> headers={headers} itemData={orders} keysToShow={keysToShow} deleteItem={handleDelete}></OriTable>

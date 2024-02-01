@@ -1,4 +1,10 @@
 'use client'
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {createOrder} from "@/services/ori/oriOrdering";
+import {Button} from "@/components/ui/button";
+import {DialogClose, DialogFooter} from "@/components/ui/dialog";
+
 export default function OrderForm() {
     async function handleSubmit(event:any) {
         event.preventDefault();
@@ -14,16 +20,9 @@ export default function OrderForm() {
             amount: Number(event.target.amount.value),
         }
 
-        const response = await fetch("http://localhost:8080/ori/ordering", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
-        })
+        const response =  await createOrder(data)
 
         if (response.ok) {
-            console.log("worked")
             console.log(response)
         } else {
             console.log("Failed")
@@ -32,69 +31,73 @@ export default function OrderForm() {
 
     return (
         <>
-            <h1>New Purchase Order</h1>
             <form onSubmit={handleSubmit}>
-
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="description">Description</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"description"}/>
-                </div>
-
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="grossWeight" >Gross Weight</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"grossWeight"}/>
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="description">Order Description</Label>
+                    </div>
+                    <Input name={"description"}/>
                 </div>
 
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="karat">Karat</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"karat"}/>
-                </div>
-
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="stoneWeight">Stone Weight</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"stoneWeight"}/>
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="grossWeight">Gross Weight</Label>
+                    </div>
+                    <Input name={"grossWeight"}/>
                 </div>
 
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="netWeight">Net Weight</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"netWeight"}/>
+
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="karat">Order Karat</Label>
+                    </div>
+                    <Input name={"karat"}/>
                 </div>
 
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="pureWeight">Pure Weight</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"pureWeight"}/>
-                </div>
-
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="rate">Rate</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"rate"}/>
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="stoneWeight">Stone Weight</Label>
+                    </div>
+                    <Input name={"stoneWeight"}/>
                 </div>
 
-                <div className={"ml-28px mb-1"}>
-                    <label htmlFor="amount">Amount</label>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <input className={"input input-bordered input-warning w-full max-w-xs"} name={"amount"}/>
-                </div>
-                <div className={"ml-28px mb-4"}>
-                    <button className={"btn btn-warning m-auto ml-auto"} type="submit">Create Order</button>
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="netWeight">Net Weight</Label>
+                    </div>
+                    <Input name={"netWeight"}/>
                 </div>
 
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="pureWeight">Pure Weight</Label>
+                    </div>
+                    <Input name={"pureWeight"}/>
+                </div>
+
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="rate">Rate</Label>
+                    </div>
+                    <Input name={"rate"}/>
+                </div>
+
+                <div className={"mb-4"}>
+                    <div className={"pb-2"}>
+                        <Label htmlFor="amount">Amount</Label>
+                    </div>
+                    <Input name={"amount"}/>
+                </div>
+
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button type="submit">
+                            Submit
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
             </form>
+
         </>
     )
 }

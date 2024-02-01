@@ -1,10 +1,9 @@
 
 
-const HOST = 'https://tontally-core-production.up.railway.app';
-// const HOST = "http://localhost:8080";
+const HOST = process.env.NEXT_PUBLIC_HOST + '/ori/ordering'
 
 export const getAllOrders = async () => {
-    const res = await  fetch(HOST + '/ori/ordering', {
+    const res = await  fetch(HOST , {
         cache: 'no-cache'
     })
     const data = await  res.json();
@@ -36,8 +35,7 @@ export const createOrder = async (order: any) => {
         body: JSON.stringify(order)
     });
 
-    const result = await response.json();
-    console.log(result);
+    return await response.json();
 }
 
 export const updateOrder = async (order: any) => {
@@ -55,7 +53,7 @@ export const updateOrder = async (order: any) => {
 }
 
 export const deleteOrder = async (id: number) => {
-    const response = await fetch(HOST, {  // Assuming '1' is the ID of the resource you want to delete
+    const response = await fetch(HOST + `/id/${id}`, {
         method: 'DELETE'
     });
 
@@ -64,6 +62,7 @@ export const deleteOrder = async (id: number) => {
     } else {
         console.log('Error deleting the resource');
     }
+    return response.json();
 }
 
 
