@@ -3,7 +3,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {createOrder} from "@/services/ori/oriOrdering";
 import {Button} from "@/components/ui/button";
-import {DialogClose, DialogFooter} from "@/components/ui/dialog";
+import {Dialog, DialogClose, DialogFooter} from "@/components/ui/dialog";
 
 export default function OrderForm() {
     async function handleSubmit(event:any) {
@@ -88,14 +88,15 @@ export default function OrderForm() {
                     </div>
                     <Input name={"amount"}/>
                 </div>
-
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Button type="submit">
-                            Submit
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
+                <Dialog>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button type="submit">
+                                Submit
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </Dialog>
             </form>
 
         </>
