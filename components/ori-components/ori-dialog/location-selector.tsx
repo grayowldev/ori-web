@@ -1,5 +1,5 @@
 import {
-    Dialog,
+    Dialog, DialogClose,
     DialogContent,
     DialogDescription, DialogFooter,
     DialogHeader,
@@ -75,7 +75,9 @@ export default function LocationSelector(props: any) {
                         }
                     </div>
                     <DialogFooter>
-                        <Button onClick={handleLocationSelection}>Save changes</Button>
+                        <DialogClose>
+                            <Button onClick={() => props.selection(selectedPath)}>Save changes</Button>
+                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
