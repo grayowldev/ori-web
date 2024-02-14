@@ -10,6 +10,7 @@ import OriTable from "@/components/ori-components/ori-table/ori-table";
 import {id} from "postcss-selector-parser";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import OrderForm from "@/app/ordering/create-purchase-order/OrderForm";
+import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 export default function Ordering() {
 
@@ -58,26 +59,31 @@ export default function Ordering() {
          return await deleteOrder(id)
     }
 
-    return(
-        <>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant={"outline"}>Create Order</Button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>New Purchase Order</DialogTitle>
 
-                    </DialogHeader>
-                    <div>
-                        <OrderForm />
+        return(
+            <>
+                <div className={"m-8"}>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant={"outline"}>Create Order</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>New Purchase Order</DialogTitle>
+
+                            </DialogHeader>
+                            <div>
+                                <OrderForm />
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+
+                    <div className="overflow-x-auto">
+                        <OriTable<PurchaseItem> headers={headers} itemData={orders} keysToShow={keysToShow} deleteItem={handleDelete}></OriTable>
                     </div>
-                </DialogContent>
-            </Dialog>
+                </div>
+            </>
+        )
+    // }
 
-            <div className="overflow-x-auto">
-                <OriTable<PurchaseItem> headers={headers} itemData={orders} keysToShow={keysToShow} deleteItem={handleDelete}></OriTable>
-            </div>
-        </>
-    )
 }
