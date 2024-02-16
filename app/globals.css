@@ -113,10 +113,12 @@ body {
 
 .page-content {
   position: fixed;
-  width: 80vw;
+  width: calc(100vw - 14rem);
   height: calc(100vh - 88px);
-  top: 88px;
-  left: 226px;
+  top: 50px;
+  left: 196px;
+  margin: 1rem;
+  /*margin-inline: auto;*/
   /*background-color: rgb(0, 255, 187);*/
   background-color: white;
 }
