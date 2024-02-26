@@ -1,13 +1,11 @@
 'use client'
-import {useState} from "react";
-import Slider from "@/components/Sliders/slider";
+import {useEffect, useState} from "react";
 import {createInventoryItems} from "@/services/inventory";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -22,12 +20,15 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import {Progress} from "@/components/ui/progress";
 import OrderList from "@/components/ori-components/order-list";
 import {useRouter} from "next/navigation";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import OriProgress from "@/components/ori-components/ori-progress/ori-progress";
 import LocationSelector from "@/components/ori-components/ori-dialog/location-selector";
+import {getAllOrders} from "@/services/ori/oriOrdering";
+import Link from "next/link";
+import {Card, CardHeader, CardTitle} from "@/components/ui/card";
+import {Location} from "@/models/location";
 
 export default function CreateInventoryItem() {
     const router = useRouter();
@@ -65,6 +66,14 @@ export default function CreateInventoryItem() {
         kt24: 24
     }
     const [itemsLocation, setItemsLocation] = useState('')
+    const [orders, setOrders] = useState([]);
+    const [itemSetLocation, setItemSetLocation] = useState<Location>()
+
+
+    useEffect(() => {
+        getOrders()
+    }, []);
+
 
     const triggerRightSlider = () => {
         setShowRightSlider(!showRightSlider)
@@ -149,9 +158,11 @@ export default function CreateInventoryItem() {
 
     const createItems = async () => {
         console.log('function trigged')
-        tableRows.map((row) => {
-            row.location = itemsLocation
-        })
+        if (itemSetLocation?.pathByIds) {
+            tableRows.map((row) => {
+                row.location = itemSetLocation?.pathByIds
+            })
+        }
         console.log(tableRows)
         try {
             const response = await createInventoryItems(tableRows)
@@ -162,123 +173,161 @@ export default function CreateInventoryItem() {
             console.log(error)
         }
     }
+
+    const getOrders = async () => {
+        const data = await getAllOrders()
+        setOrders(data)
+        return data.length;
+    }
+
     let handleSubmit = async (event: any) => {
         event.preventDefault();
         await createItems();
         router.push('/inventory');
     }
 
-    return (
-        <div className={"content-container"}>
-            <div className={"title-container"}>
-                <h1 className={"title"}>Add New Items</h1>
-            </div>
+    const onSelect = (path: Location) => {
+        console.log("selected from parent function")
+        console.log(path)
+        setItemSetLocation(path)
+        console.log(itemSetLocation)
+    }
 
-            {/*{showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}*/}
-            <div className={'mb-10 flex'}>
-                <div className={"item-container order-fetch-container"}>
-                    <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
+    if (orders.length == 0) {
+      return (
+          <div className={"p-8"}>
+              <h1>OOF</h1>
+              <h1>Looks like we have no purchased orders to process</h1>
+              <div>
+                  <Link href={"/ordering"}>
+                      <Card className={"w-60 h-64"}>
+                          <CardHeader>
+                              <CardTitle>
+                                  <div className={"p-4"}>CREATE</div>
+                                  <div className={"p-4"}>AN</div>
+                                  <div className={"p-4"}>ORDER</div>
+                              </CardTitle>
+                              {/*<CardDescription>Deploy your new project in one-click.</CardDescription>*/}
+                          </CardHeader>
+                      </Card>
+                  </Link>
 
-                    <Drawer>
-                        <DrawerTrigger>
-                            <Button className={"ml-2"} variant={"outline"}>
-                                Fetch Orders
-                            </Button>
-                        </DrawerTrigger>
-                        <DrawerContent>
-                            <DrawerHeader>
-                                <DrawerTitle>Available Purchased Orders</DrawerTitle>
-                                <DrawerDescription>Select an order from the list below</DrawerDescription>
-                            </DrawerHeader>
-                            <DrawerClose>
-                                <div className={"ml-8 mr-8"}>
-                                    <OrderList orderSelection={handleOrderSelection}></OrderList>
-                                </div>
-                            </DrawerClose>
-                            <DrawerFooter>
+              </div>
+          </div>
+      )
+    } else {
+        return (
+            <div className={"content-container"}>
+                <div className={"title-container"}>
+                    <h1 className={"title"}>Add New Items</h1>
+                </div>
+
+                {/*{showRightSlider && <Slider orderSelection={handleOrderSelection} isSidebarVisible={showRightSlider}/>}*/}
+                <div className={'mb-10 flex'}>
+                    <div className={"item-container order-fetch-container"}>
+                        <Input className={"w-32 inline"} placeholder={purchaseOrder != null  ? purchaseOrder['id'] : "Order Number"}/>
+
+                        <Drawer>
+                            <DrawerTrigger>
+                                <Button className={"ml-2"} variant={"outline"}>
+                                    Fetch Orders
+                                </Button>
+                            </DrawerTrigger>
+                            <DrawerContent>
+                                <DrawerHeader>
+                                    <DrawerTitle>Available Purchased Orders</DrawerTitle>
+                                    <DrawerDescription>Select an order from the list below</DrawerDescription>
+                                </DrawerHeader>
                                 <DrawerClose>
-                                    <Button variant="outline">Cancel</Button>
+                                    <div className={"ml-8 mr-8"}>
+                                        <OrderList orderSelection={handleOrderSelection}></OrderList>
+                                    </div>
                                 </DrawerClose>
-                            </DrawerFooter>
-                        </DrawerContent>
-                    </Drawer>
-                    <div>
-                        <LocationSelector></LocationSelector>
+                                <DrawerFooter>
+                                    <DrawerClose>
+                                        <Button variant="outline">Cancel</Button>
+                                    </DrawerClose>
+                                </DrawerFooter>
+                            </DrawerContent>
+                        </Drawer>
+                        <div>
+                            <LocationSelector selection={onSelect}></LocationSelector>
+                        </div>
+
                     </div>
-
+                    <div className={'ml-auto mr-56'}>
+                        {
+                            purchaseOrder ?
+                                <OriProgress
+                                    progressPercentage={weightProgress}
+                                    weight={purchaseOrder['grossWeight']}
+                                    sum={weightSum}>
+                                </OriProgress> : <></>
+                        }
+                    </div>
                 </div>
-                <div className={'ml-auto mr-56'}>
-                    {
-                        purchaseOrder ?
-                            <OriProgress
-                                progressPercentage={weightProgress}
-                                weight={purchaseOrder['grossWeight']}
-                                sum={weightSum}>
-                            </OriProgress> : <></>
-                    }
-                </div>
-            </div>
 
 
 
-            {/*todo: Create table rows depending on number of items being created*/}
-            <div className={"w-max border-solid border-2 rounded-lg p-8"}>
-                <Table>
-                    <TableHeader>
-                    <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Weight</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Style</TableHead>
-                        <TableHead>Metal Purity (kt)</TableHead>
-                    </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {(
-                            tableRows.map((item:any, index:number) => {
-                                console.log(tableRows)
-                                return (
-                                    <TableRow key={item.id}>
-                                        <TableCell>
-                                            <Input placeholder={"Enter item name"} onChange={( event) => updateName(index, event)}></Input>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input placeholder={"Enter item weight"} onChange={( event) => updateWeight(index, event)}></Input>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input placeholder={"Enter category"} onChange={( event) => updateCategory(index, event)}></Input>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input placeholder={"Enter style"} onChange={( event) => updateStyle(index, event)}></Input>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Select onValueChange={(e) => updateMetalPurity(index, e)}>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder={"Select the metal purity"} />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectGroup>
-                                                        {
-                                                            Object.keys(ktValues).map((key) => (
+                {/*todo: Create table rows depending on number of items being created*/}
+                <div className={"w-max border-solid border-2 rounded-lg p-8"}>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Weight</TableHead>
+                                <TableHead>Category</TableHead>
+                                <TableHead>Style</TableHead>
+                                <TableHead>Metal Purity (kt)</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {(
+                                tableRows.map((item:any, index:number) => {
+                                    console.log(tableRows)
+                                    return (
+                                        <TableRow key={item.id}>
+                                            <TableCell>
+                                                <Input placeholder={"Enter item name"} onChange={( event) => updateName(index, event)}></Input>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Input placeholder={"Enter item weight"} onChange={( event) => updateWeight(index, event)}></Input>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Input placeholder={"Enter category"} onChange={( event) => updateCategory(index, event)}></Input>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Input placeholder={"Enter style"} onChange={( event) => updateStyle(index, event)}></Input>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Select onValueChange={(e) => updateMetalPurity(index, e)}>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder={"Select the metal purity"} />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {
+                                                                Object.keys(ktValues).map((key) => (
                                                                     <SelectItem key={key} value={ktValues[key]}>{ktValues[key]} kt</SelectItem>
-                                                            ))
-                                                        }
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })
-                        )}
-                    </TableBody>
-                </Table>
+                                                                ))
+                                                            }
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                            )}
+                        </TableBody>
+                    </Table>
 
-                <div className={"w-full inline flex place-content-center w-100%"}>
-                    <Button variant={"outline"} className={"center"} onClick={generateTableRows}>+ Add item</Button>
+                    <div className={"w-full inline flex place-content-center w-100%"}>
+                        <Button variant={"outline"} className={"center"} onClick={generateTableRows}>+ Add item</Button>
+                    </div>
+                    <Button disabled={!purchaseOrder} onClick={handleSubmit}>Submit</Button>
                 </div>
-                <Button disabled={!purchaseOrder} onClick={handleSubmit}>Submit</Button>
             </div>
-        </div>
-    )
+        )
+    }
 }
