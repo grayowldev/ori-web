@@ -22,7 +22,7 @@ export default function OrderForm() {
             stoneWeight: Number(event.target.stoneWeight.value),
             netWeight: Number(event.target.netWeight.value),
             pureWeight: Number(event.target.pureWeight.value),
-            karat: Number(event.target.karat.value),
+            karat: karatVar,
             rate: Number(event.target.rate.value),
             amount: Number(event.target.amount.value),
         }
