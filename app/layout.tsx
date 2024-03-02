@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import SideNavbar from "@/components/Navbar/sideNavbr";
 import TopNavbar from "@/components/Navbar/topNavbar";
+import {useRouter} from "next/navigation";
+import {router} from "next/client";
 
 const inter = Inter({ subsets: ['latin'] })
 
